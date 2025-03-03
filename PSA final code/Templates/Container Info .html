@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Cargo Info.css') }}">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="/Container_DashBoard" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+				<li class="divider" data-text="Booking">Main</li>
+				
+				<li><a href="/Container_Booking"><i class='bx bxs-chart icon' ></i> Booking</a></li>
+				<li><a href="/Container Info" class="active"><i class='bx bxs-widget icon' ></i> Container info</a></li>
+				<li><a href="/Container Disputes"  ><i class='bx bxs-widget icon' ></i> Disputes</a></li>
+				
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+						<li><a href="{{ url_for('logout') }}"><i class='bx bxs-log-out-circle'></i> Logout</a></li> 
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">Container info</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Container info</a></li>
+				</ul>
+				<div class="info-data">
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="activeCount">0</h2>
+								<p>Active Containers</p>
+							</div>
+							<i class='bx bx-trending-up icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="activeProgress"></div>
+						</div>
+						<span class="label" id="activePercentage">0%</span>
+					</div>
+				
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="solvedCount">0</h2>
+								<p>Delivered Containers</p>
+							</div>
+							<i class='bx bx-trending-down icon down'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="solvedProgress"></div>
+						</div>
+						<span class="label" id="solvedPercentage">0%</span>
+					</div>
+				
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="filedCount">0</h2>
+								<p>Pending Containers</p>
+							</div>
+							<i class='bx bx-trending-up icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="filedProgress"></div>
+						</div>
+						<span class="label" id="filedPercentage">0%</span>
+					</div>
+				</div>
+				<h1>Container List</h1>
+				<div class="table-toolbar">
+					<button id="deleteButton" onclick="deleteSelectedContainers()">Delete Selected</button>
+				</div>
+				<div class="table-container">
+					<table>
+						<thead>
+							<tr>
+								<th>Select</th>
+								<th>Container ID</th>
+								<th>Date Created</th>
+								<th>Date Completed</th>
+								<th>Status</th>
+								<th>Dimensions</th>
+								<th>Tags</th>
+								<th>Description</th>
+								<th>Origin Location</th>
+								<th>Destination Location</th>
+								<th>Date of Departure</th>
+								<th>Date of Arrival</th>
+								<th>Flexidate Tolerance</th>
+							</tr>
+						</thead>
+						<tbody id="container-table-body">
+							<!-- Content will be loaded here by JavaScript -->
+						</tbody>
+					</table>
+				</div>
+				
+			</main>
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		window.onload = function() {
+            fetchUserContainers();
+        };
+
+        function fetchUserContainers() {
+            fetch('/get-user-containers')
+                .then(response => response.json())
+                .then(data => {
+                    const containerTableBody = document.getElementById('container-table-body');
+                    containerTableBody.innerHTML = ''; // Clear previous content
+
+                    if (data.length === 0) {
+                        containerTableBody.innerHTML = '<tr><td colspan="13">No container data available</td></tr>';
+                    } else {
+                        data.forEach(container => {
+                            containerTableBody.innerHTML += `
+                                <tr>
+                                    <td><input type="checkbox" class="container-checkbox" value="${container.containerID}"></td>
+                                    <td>${container.containerID}</td>
+                                    <td>${container.date_created}</td>
+                                    <td>${container.date_completed}</td>
+                                    <td>${container.status}</td>
+                                    <td>${container.dimensions}</td>
+                                    <td>${container.tags}</td>
+                                    <td>${container.description}</td>
+                                    <td>${container.origin_location}</td>
+                                    <td>${container.destination_location}</td>
+                                    <td>${container.date_of_departure}</td>
+                                    <td>${container.date_of_arrival}</td>
+                                    <td>${container.flexidate_tolerance}</td>
+                                </tr>
+                            `;
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching container data:', error));
+        }
+
+        function deleteSelectedContainers() {
+            const selectedContainers = document.querySelectorAll('.container-checkbox:checked');
+            const containerIDs = Array.from(selectedContainers).map(input => input.value);
+
+            if (containerIDs.length === 0) {
+                alert("No container selected for deletion.");
+                return;
+            }
+
+            fetch('/delete-container', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ containerIDs })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    fetchUserContainers(); // Refresh the container table
+                    alert('Selected containers have been deleted.');
+                } else {
+                    alert(data.message || 'Failed to delete selected containers.');
+                }
+            })
+            .catch(error => console.error('Error deleting containers:', error));
+        }
+		document.addEventListener('DOMContentLoaded', function () {
+			fetchContainerDisputeStats();  // Call the function when the page loads
+		});
+
+		function fetchContainerDisputeStats() {
+			fetch('/get-container-stats', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`HTTP error! Status: ${response.status}`);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					console.error('Error:', data.error);
+					return;
+				}
+
+				// Debugging: Log the response data to verify
+				console.log('Container Stats:', data);
+
+				// Update the card values with counts
+				document.getElementById('activeCount').textContent = data.active_count;
+				document.getElementById('solvedCount').textContent = data.solved_count;
+				document.getElementById('filedCount').textContent = data.filed_count;
+
+				// Update the percentage labels
+				document.getElementById('activePercentage').textContent = `${data.active_percentage.toFixed(2)}%`;
+				document.getElementById('solvedPercentage').textContent = `${data.solved_percentage.toFixed(2)}%`;
+				document.getElementById('filedPercentage').textContent = `${data.filed_percentage.toFixed(2)}%`;
+
+				// Update the progress bars' width to match the percentages
+				const progressBars = [
+					{ id: 'activeProgress', percentage: data.active_percentage },
+					{ id: 'solvedProgress', percentage: data.solved_percentage },
+					{ id: 'filedProgress', percentage: data.filed_percentage }
+				];
+
+				progressBars.forEach(bar => {
+					const progressBar = document.getElementById(bar.id);
+					if (progressBar) {
+						progressBar.style.width = `${bar.percentage}%`;
+					}
+				});
+			})
+			.catch(error => console.error('Error fetching container stats:', error));
+		}
+
+		// Ensure the function runs when the page loads
+		document.addEventListener('DOMContentLoaded', fetchContainerDisputeStats);
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="{{ url_for('static', filename='js/Cargo Info.js') }}"></script>
+</body>
+</html>

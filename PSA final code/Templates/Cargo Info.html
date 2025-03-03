@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Cargo Info.css') }}">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="/Cargo_DashBoard" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+				<li class="divider" data-text="Booking">Main</li>
+				
+				
+				<li><a href="/Cargo_Booking"><i class='bx bxs-chart icon' ></i> Booking</a></li>
+				<li><a href="/Cargo Info" class="active"><i class='bx bxs-widget icon' ></i> Cargo Info</a></li>
+				<li><a href="/Cargo Disputes" ><i class='bx bxs-widget icon' ></i> Disputes</a></li>
+				
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+						<li><a href="{{ url_for('logout') }}"><i class='bx bxs-log-out-circle'></i> Logout</a></li> 
+					</ul>s
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">Cargo Info</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Cargo Info</a></li>
+				</ul>
+				<div class="info-data">
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="activeCargo">0</h2>
+								<p>Active Cargo</p>
+							</div>
+							<i class='bx bx-trending-up icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="activeProgress"></div>
+						</div>
+						<span class="label" id="activePercentage">0%</span>
+					</div>
+				
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="unmatchedCargo">0</h2>
+								<p>Unmatched Cargo</p>
+							</div>
+							<i class='bx bx-trending-down icon down'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="unmatchedProgress"></div>
+						</div>
+						<span class="label" id="unmatchedPercentage">0%</span>
+					</div>
+				
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="successfulCargo">0</h2>
+								<p>Successful Cargo</p>
+							</div>
+							<i class='bx bx-trending-up icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="successfulProgress"></div>
+						</div>
+						<span class="label" id="successfulPercentage">0%</span>
+					</div>
+				</div>
+				<h1>Dashboard</h1>
+					<div class="table-toolbar">
+						<button id="deleteButton" onclick="deleteSelectedCargo()">Delete Selected</button>
+					</div>
+					<div class="table-container">
+						<table>
+							<thead>
+								<tr>
+									<th>Select</th>
+									<th>Cargo ID</th>
+									<th>Date Created</th>
+									<th>Date Completed</th>
+									<th>Status</th>
+									<th>Dimensions</th>
+									<th>Weight</th>
+									<th>Tags</th>
+									<th>Description</th>
+									<th>Origin Location</th>
+									<th>Destination Location</th>
+									<th>Date of Departure</th>
+									<th>Date of Arrival</th>
+									<th>Flexidate Tolerance</th>
+								</tr>
+							</thead>
+							<tbody id="cargo-table-body">
+								<!-- Content will be loaded here by JavaScript -->
+							</tbody>
+						</table>
+					</div>
+				
+			</main>
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		// Ensure this element exists in your HTML or target a different element
+		let number = document.getElementById("number");
+		let counter = 0;
+		let interval = setInterval(() => {
+			if (counter === 65) {
+				clearInterval(interval); // Corrected function name and use the interval variable
+			} else {
+				counter += 1;
+				if (number) { // Check if the element exists before trying to set its innerHTML
+					number.innerHTML = counter + "%";
+				}
+			}
+		}, 20);
+	
+		window.onload = function() {
+			fetchUserCargo();
+		};
+	
+		function fetchUserCargo() {
+			fetch('/get-user-cargo')
+				.then(response => response.json())
+				.then(data => {
+					const cargoTableBody = document.getElementById('cargo-table-body');
+					cargoTableBody.innerHTML = ''; // Clear previous content
+	
+					if (data.length === 0) {
+						cargoTableBody.innerHTML = '<tr><td colspan="14">No cargo data available</td></tr>';
+					} else {
+						data.forEach(cargo => {
+							cargoTableBody.innerHTML += `
+								<tr>
+									<td><input type="checkbox" class="cargo-checkbox" value="${cargo.cargoID}"></td>
+									<td>${cargo.cargoID}</td>
+									<td>${cargo.date_created}</td>
+									<td>${cargo.date_completed}</td>
+									<td>${cargo.status}</td>
+									<td>${cargo.dimensions}</td>
+									<td>${cargo.weight}</td>
+									<td>${cargo.tags}</td>
+									<td>${cargo.description}</td>
+									<td>${cargo.origin_location}</td>
+									<td>${cargo.destination_location}</td>
+									<td>${cargo.date_of_departure}</td>
+									<td>${cargo.date_of_arrival}</td>
+									<td>${cargo.flexidate_tolerance}</td>
+								</tr>
+							`;
+						});
+					}
+				})
+				.catch(error => console.error('Error fetching cargo data:', error));
+		}
+		function deleteSelectedCargo() {
+			const selectedCargo = document.querySelectorAll('.cargo-checkbox:checked');
+			const cargoIDs = Array.from(selectedCargo).map(input => input.value);
+
+			console.log("Cargo IDs to delete:", cargoIDs);  // Log collected cargo IDs
+
+			if (cargoIDs.length === 0) {
+				console.log("No cargo selected for deletion.");
+				alert("No cargo selected for deletion.");
+				return;
+			}
+
+			fetch('/delete-cargo', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ cargoIDs })
+			})
+			.then(response => response.json())  // Parse JSON response
+			.then(data => {
+				console.log("Response from server:", data);  // Log server response
+				if (response.ok) {
+					fetchUserCargo(); // Refresh the cargo table
+					alert('Selected cargo has been deleted.');
+				} else {
+					alert('Failed to delete selected cargo.');
+				}
+			})
+			.catch(error => {
+				console.error('Error deleting cargo:', error);
+				console.log("Request failed with error:", error);
+			});
+		}
+		document.addEventListener('DOMContentLoaded', function () {
+			fetchCargoStats();  // Call the function when the page loads
+		});
+
+		function fetchCargoStats() {
+			fetch('/get-cargo-stats')
+				.then(response => response.json())
+				.then(data => {
+					if (data.error) {
+						console.error('Error:', data.error);
+						return;
+					}
+
+					// Update the card values
+					document.getElementById('activeCargo').textContent = data.active_cargo;
+					document.getElementById('unmatchedCargo').textContent = data.unmatched_cargo;
+					document.getElementById('successfulCargo').textContent = data.successful_cargo;
+
+					// Update the percentage labels
+					document.getElementById('activePercentage').textContent = `${data.active_percentage.toFixed(2)}%`;
+					document.getElementById('unmatchedPercentage').textContent = `${data.unmatched_percentage.toFixed(2)}%`;
+					document.getElementById('successfulPercentage').textContent = `${data.successful_percentage.toFixed(2)}%`;
+
+					// Update the progress bars width to match the percentage
+					document.getElementById('activeProgress').style.width = `${data.active_percentage}%`;
+					document.getElementById('unmatchedProgress').style.width = `${data.unmatched_percentage}%`;
+					document.getElementById('successfulProgress').style.width = `${data.successful_percentage}%`;
+				})
+				.catch(error => console.error('Error fetching cargo stats:', error));
+		}
+
+		document.addEventListener('DOMContentLoaded', fetchCargoStats);
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="{{ url_for('static', filename='js/Cargo Info.js') }}"></script>
+</body>
+</html>

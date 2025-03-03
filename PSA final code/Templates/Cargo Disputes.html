@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Cargo Disputes.css') }}">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="/Cargo_DashBoard" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+				<li class="divider" data-text="Booking">Main</li>
+				
+				
+				<li><a href="/Cargo_Booking"><i class='bx bxs-chart icon' ></i> Booking</a></li>
+				<li><a href="/Cargo Info"><i class='bx bxs-widget icon' ></i> Cargo Info</a></li>
+				<li><a href="/Cargo Disputes" class="active"><i class='bx bxs-widget icon' ></i> Disputes</a></li>
+				
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+						<li><a href="{{ url_for('logout') }}"><i class='bx bxs-log-out-circle'></i> Logout</a></li> 
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">Disputes</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Disputes</a></li>
+				</ul>
+
+				<div class="info-data">
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="activeCount">0</h2>
+								<p>Active Disputes</p>
+							</div>
+							<i class='bx bx-trending-up icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="activeProgress"></div>
+						</div>
+						<span class="label" id="activePercentage">0%</span>
+					</div>
+				
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="solvedCount">0</h2>
+								<p>Solved Disputes</p>
+							</div>
+							<i class='bx bx-check-circle icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="solvedProgress"></div>
+						</div>
+						<span class="label" id="solvedPercentage">0%</span>
+					</div>
+				
+					<div class="card">
+						<div class="head">
+							<div>
+								<h2 id="filedCount">0</h2>
+								<p>Filed Disputes</p>
+							</div>
+							<i class='bx bx-file icon'></i>
+						</div>
+						<div class="progress-container">
+							<div class="progress-bar" id="filedProgress"></div>
+						</div>
+						<span class="label" id="filedPercentage">0%</span>
+					</div>
+				</div>
+				<div class="info-data">
+					<div class="card">
+						<div class="dispute-card">
+							<h2>File a Dispute</h2>
+							<form id="file-dispute-form">
+								<div class="form-group">
+									<label for="plaintiff">Your Name (Plaintiff)</label>
+									<input type="text" id="plaintiff" name="plaintiff" required />
+								</div>
+				
+								<div class="form-group">
+									<label for="involved-user">Involved User</label>
+									<input type="text" id="involved-user" name="involved-user" required />
+								</div>
+				
+								<div class="form-group">
+									<label for="description">Dispute Description</label>
+									<textarea id="description" name="description" rows="3" required></textarea>
+								</div>
+				
+								<div class="form-group">
+									<label for="container-id">Container ID (Optional)</label>
+									<input type="text" id="container-id" name="container-id" />
+								</div>
+				
+								<div class="form-group">
+									<button type="submit">Submit Dispute</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="info-data">
+					<div class="card">
+						<h2>Disputes Filed by Me</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Date Created</th>
+									<th>Status</th>
+									<th>Plaintiff</th>
+									<th>Involved Users</th>
+									<th>Description</th>
+									<th>Container ID</th>
+								</tr>
+							</thead>
+							<tbody id="plaintiff-table-body"></tbody>
+						</table>
+					</div>
+				
+					<div class="card">
+						<h2>Disputes Filed Against Me</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Date Created</th>
+									<th>Status</th>
+									<th>Plaintiff</th>
+									<th>Involved Users</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody id="defendant-table-body"></tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		function fetchDisputes() {
+			// Fetch disputes filed by the user
+			fetch('/get-filed-by-me')
+				.then(response => response.json())
+				.then(data => populateTable(data.filed_by_me, 'plaintiff-table-body'))
+				.catch(error => console.error('Error fetching filed disputes:', error));
+
+			// Fetch disputes filed against the user
+			fetch('/get-filed-against-me')
+				.then(response => response.json())
+				.then(data => populateTable(data.filed_against_me, 'defendant-table-body'))
+				.catch(error => console.error('Error fetching disputes filed against me:', error));
+		}
+
+		function populateTable(disputes, tableBodyId) {
+			const tableBody = document.getElementById(tableBodyId);
+			tableBody.innerHTML = '';  // Clear previous content
+
+			if (disputes.length === 0) {
+				tableBody.innerHTML = `<tr><td colspan="6">No disputes available.</td></tr>`;
+				return;
+			}
+
+			disputes.forEach(dispute => {
+				const row = `
+					<tr>
+						<td>${dispute.date_created}</td>
+						<td>${dispute.status}</td>
+						<td>${dispute.dispute_plaintiff}</td>
+						<td>${dispute.involved_users}</td>
+						<td>${dispute.description}</td>
+						<td>${dispute.container_id || 'N/A'}</td>
+					</tr>
+				`;
+				tableBody.innerHTML += row;
+			});
+		}
+
+		window.onload = fetchDisputes;  // Call this function when the page loads
+		document.getElementById('file-dispute-form').addEventListener('submit', function (event) {
+			event.preventDefault(); // Prevent default form submission behavior
+
+			const formData = {
+				plaintiff: document.getElementById('plaintiff').value,
+				involved_user: document.getElementById('involved-user').value,
+				description: document.getElementById('description').value,
+				container_id: document.getElementById('container-id').value || null, // Optional
+				cargoID: Math.floor(Math.random() * 10000)  // Example: Random cargo ID for testing
+			};
+
+			fetch('/file-dispute', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData)
+			})
+			.then(response => {
+				if (response.ok) {
+					alert('Dispute filed successfully!');
+					document.getElementById('file-dispute-form').reset(); // Reset the form
+				} else {
+					response.json().then(data => {
+						alert(`Error: ${data.error}`);
+					});
+				}
+			})
+			.catch(error => {
+				console.error('Error filing dispute:', error);
+			});
+		});
+
+		document.addEventListener('DOMContentLoaded', function () {
+			fetchDisputeStats();  // Call the function when the page loads
+		});
+
+		function fetchDisputeStats() {
+			fetch('/get-dispute-stats')
+				.then(response => response.json())
+				.then(data => {
+					if (data.error) {
+						console.error('Error:', data.error);
+						return;
+					}
+
+					// Update the card values
+					document.getElementById('activeCount').textContent = data.active_count;
+					document.getElementById('solvedCount').textContent = data.solved_count;
+					document.getElementById('filedCount').textContent = data.filed_count;
+
+					// Update the percentage labels
+					document.getElementById('activePercentage').textContent = `${data.active_percentage.toFixed(2)}%`;
+					document.getElementById('solvedPercentage').textContent = `${data.solved_percentage.toFixed(2)}%`;
+					document.getElementById('filedPercentage').textContent = `${data.filed_percentage.toFixed(2)}%`;
+
+					// Update the progress bars width to match the percentage
+					document.getElementById('activeProgress').style.width = `${data.active_percentage}%`;
+					document.getElementById('solvedProgress').style.width = `${data.solved_percentage}%`;
+					document.getElementById('filedProgress').style.width = `${data.filed_percentage}%`;
+				})
+				.catch(error => console.error('Error fetching dispute stats:', error));
+		}
+
+		document.addEventListener('DOMContentLoaded', fetchDisputeStats);
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="{{ url_for('static', filename='js/Cargo Disputes.js') }}"></script>
+</body>
+</html>

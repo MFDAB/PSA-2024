@@ -1,0 +1,281 @@
+/* Importing Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(-30deg, #2C0F2B,  #00001C, #00001C, #2C0F2B);
+}
+
+.container {
+  max-width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(
+    to top right,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.3)
+	);
+    border-radius: 14px;
+	padding: 10px;
+}
+
+.container .title {
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+  color: white;
+}
+
+.container .title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+.content form .user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+
+form .user-details .input-box {
+  margin-bottom: 15px;
+  width: calc(100% / 2 - 20px);
+}
+
+form .input-box span.details {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.user-details .input-box input {
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+
+.user-details .input-box input:focus,
+.user-details .input-box input:valid {
+  border-color: #9b59b6;
+}
+
+form .gender-details .gender-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+}
+
+form .category {
+  display: flex;
+  width: 80%;
+  margin: 14px 0;
+  justify-content: space-between;
+}
+
+form .category label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+}
+
+form .category label .dot {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: #d9d9d9;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+  
+}
+
+#dot-1:checked~.category label .one,
+#dot-2:checked~.category label .two,
+#dot-3:checked~.category label .three {
+  background: #9b59b6;
+  border-color: #d9d9d9;
+  
+}
+
+form input[type="radio"] {
+  display: none;
+}
+
+form .button {
+  height: 45px;
+  margin: 35px 0
+}
+
+form .button input {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+form .button input:hover {
+  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+}
+
+/* Responsive media query code for mobile devices */
+@media(max-width: 584px) {
+  .container {
+    max-width: 100%;
+  }
+
+  form .user-details .input-box {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  form .category {
+    width: 100%;
+  }
+
+  .content form .user-details {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .user-details::-webkit-scrollbar {
+    width: 5px;
+  }
+}
+
+/* Responsive media query code for mobile devices */
+@media(max-width: 459px) {
+  .container .content .category {
+    flex-direction: column;
+  }
+}
+
+/* The container that holds the toggle */
+.toggle-container {
+  display: inline-block;
+  position: relative;
+  width: 200px; /* Increase width to make the toggle longer */
+  height: 34px;
+  margin-bottom: 50px;
+}
+
+/* Hide the default checkbox */
+.toggle-checkbox {
+  display: none;
+}
+
+/* The switch background */
+.toggle-label {
+  position: absolute;
+  cursor: pointer;
+  background-color: #71b7e6;
+  border-radius: 34px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px; /* Adjust padding for longer toggle */
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+}
+
+/* The circular slider (the toggle handle) */
+.toggle-label::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* Change background when checked */
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #9b59b6;
+}
+
+/* Move the circular slider when checked */
+.toggle-checkbox:checked + .toggle-label::before {
+  transform: translateX(160px); /* Adjust translation based on new width */
+}
+
+/* Text inside the toggle */
+.toggle-text {
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s;
+}
+
+/* Default colors for the left and right text */
+.toggle-text-left {
+  margin-left: 20px;
+  color: #71b7e6;  /* Default color for 'Container' */
+}
+
+.toggle-text-right {
+  margin-right: 30px;
+  color: #ccc;  /* Default color for 'Cargo' */
+}
+
+/* When not checked, change the right text color */
+.toggle-checkbox:not(:checked) + .toggle-label .toggle-text-right {
+  opacity: 1;
+  color: #9b59b6;  /* Semi-visible right text */
+}
+
+/* When checked, change the color of the left text */
+.toggle-checkbox:checked + .toggle-label .toggle-text-left {
+  color: #71b7e6;  /* Semi-visible left text */
+}
+
+/* When checked, change the color of the right text */
+.toggle-checkbox:checked + .toggle-label .toggle-text-right {
+  color: #9b59b6;  /* Highlighted color for 'Cargo' */
+}
+
+form .toggle-container span.toggle {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: white;
+}

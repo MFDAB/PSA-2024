@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/PSA Active Container.css') }}">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="/PSA Dash Board"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
+				
+				<li class="divider" data-text="Container & Cargo details">Container & Cargo details</li>
+				<li>
+					<a href="#" ><i class='bx bxs-notepad icon' ></i> Active <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="/PSA_active_container" >Active Container</a></li>
+						<li><a href="/PSA_active_cargo">Active Cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> Unmatched <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="PSA_Unmatched_container">Unmatched container</a></li>
+						<li><a href="/PSA_Unmatched_cargo">Unmatched cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#" class="active"><i class='bx bxs-notepad icon' ></i> History <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="/PSA_History_container"class="active">History Container</a></li>
+						<li><a href="/PSA_Histroy_cargo">History Cargo</a></li>
+					</ul>
+				</li>
+				
+
+				<li>
+					<a href="#"><i class='bx bxs-inbox icon' ></i> Feedbacks <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">Service feed back</a></li>
+						<li><a href="#">Enquiries</a></li>
+						<li><a href="#">User List</a></li>
+						
+					</ul>
+				</li>
+
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://www.cmgassets.com/s3fs-public/styles/article_node_main_image/public/2024-03/untitled-design-97.png?h=611f27ca&itok=kPA8rwN8" alt="Profile Image">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+						<li><a href="{{ url_for('logout') }}"><i class='bx bxs-log-out-circle'></i> Logout</a></li> 
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">History containers</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">History containers</a></li>
+				</ul>
+				
+				<div class="info-data">
+					<div class="card">
+						<div class="container-table-wrapper">
+							<table class="container-table">
+								<p>Containers</p>
+								<thead>
+									<tr>
+										<th>Select</th>
+										<th>Container Name</th>
+										<th>Container ID</th>
+										<th>Quantity</th>
+										<th>Departure Date</th>
+										<th>Arrival Date</th>
+										<th>Status</th>
+										<th>Details</th>
+									</tr>
+								</thead>
+								<tbody id="container-table-body">
+									<!-- Container details will be injected here via JavaScript -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<div class="info-data">
+					<div class="card">
+						<p>Cargo</p>
+						<!-- Cargo Table (Hidden initially) -->
+						<table class="cargo-table" id="cargo-table" style="display: none;">
+							<thead>
+								<tr>
+									<th>Product Name</th>
+									<th>Product ID</th>
+									<th>Quantity</th>
+									<th>Dimension</th>
+									<th>Tags</th>
+									<th>Flexidate Tolerance</th>
+								</tr>
+							</thead>
+							<tbody id="cargo-details">
+								<!-- Cargo details will be injected here via JavaScript -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="info-data">
+					<div class="card">	
+						<p>Feedbacks</p>			
+						<!-- Complaints Table (Hidden initially) -->
+						<table class="complaints-table" id="complaints-table">
+							<thead>
+							  <tr>
+								<th>Complaint ID</th>
+								<th>Description</th>
+								<th>Date</th>
+							  </tr>
+							</thead>
+							<tbody id="complaints-details">
+							  <!-- Complaints details will be injected here via JavaScript -->
+							</tbody>
+						  </table>
+					</div>
+				</div>
+			</main>
+			
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		// Fetch container data when the page loads
+		window.onload = function() {
+			fetchContainers();
+		};
+
+		// Function to fetch containers from the server
+		function fetchContainers() {
+			console.log('Fetching containers...');
+			fetch('/get-all-containers-Delivered')  // Adjust the API route to your endpoint
+				.then(response => response.json())
+				.then(data => {
+					console.log('Data received:', data); // Debugging: check if data is fetched
+
+					// Populate the container table with the data
+					const containerTableBody = document.getElementById('container-table-body');
+					containerTableBody.innerHTML = ''; // Clear any existing data
+
+					// If no containers are returned
+					if (data.containers.length === 0) {
+						containerTableBody.innerHTML = '<tr><td colspan="8">No containers available</td></tr>';
+						return;
+					}
+
+					data.containers.forEach(container => {
+						const row = `
+							<tr data-container="${container.containerID}">
+								<td><input type="radio" name="container-select" onchange="showDetails(${container.containerID})"></td>
+								<td>${container.name}</td>
+								<td>${container.containerID}</td>
+								<td>${container.quantity || 'N/A'} kg</td>
+								<td>${container.date_of_departure ? new Date(container.date_of_departure).toLocaleDateString() : 'N/A'}</td>
+								<td>${container.date_of_arrival ? new Date(container.date_of_arrival).toLocaleDateString() : 'N/A'}</td>
+								<td>${container.status}</td>
+								<td>
+									<div class="show-more" onclick="toggleDetails(${container.containerID})">
+										Show More
+										<div class="details-box" style="display: none;">
+											<p>Date created: ${new Date(container.date_created).toLocaleDateString()}</p>
+											<p>Date completed: ${container.date_completed ? new Date(container.date_completed).toLocaleDateString() : 'Not Completed'}</p>
+											<p>Origin: ${container.origin_location}</p>
+											<p>Destination: ${container.destination_location}</p>
+											<p>Description: ${container.description}</p>
+										</div>
+									</div>
+								</td>
+							</tr>
+						`;
+						containerTableBody.innerHTML += row;
+					});
+				})
+				.catch(error => {
+					console.error('Error fetching containers:', error);
+					alert('Error fetching containers. Check the console for more details.');
+				});
+		}
+
+		// Function to toggle container details
+		function toggleDetails(containerID) {
+			const detailsBox = document.querySelector(`tr[data-container="${containerID}"] .details-box`);
+			if (detailsBox) {
+				detailsBox.style.display = detailsBox.style.display === 'none' ? 'block' : 'none';
+			}
+		}
+
+		function showDetails(containerID) {
+    console.log(`Fetching cargo and complaints details for container ID: ${containerID}`); // Debugging log
+
+    // Fetch cargo details for the selected container
+    fetch(`/get-cargo-details/${containerID}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Cargo data received:', data);  // Debugging: check if cargo data is fetched
+
+            // Populate the cargo table
+            const cargoTableBody = document.getElementById('cargo-details');
+            cargoTableBody.innerHTML = ''; // Clear previous content
+
+            if (data.cargo.length > 0) {
+                data.cargo.forEach(cargo => {
+                    cargoTableBody.innerHTML += `
+                        <tr>
+                            <td>${cargo.product_name || 'N/A'}</td>
+                            <td>${cargo.product_id || 'N/A'}</td>
+                            <td>${cargo.quantity || 'N/A'}</td>
+                            <td>${cargo.dimension || 'N/A'}</td>
+                            <td>${cargo.tags || 'N/A'}</td>
+                            <td>${cargo.flexidate_tolerance || 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('cargo-table').style.display = 'table'; // Show cargo table
+            } else {
+                cargoTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6">No cargo details available for this container</td>
+                    </tr>
+                `;
+                document.getElementById('cargo-table').style.display = 'table'; // Show cargo table even if empty
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching cargo details:', error);
+            alert('Error fetching cargo details. Check the console for more details.');
+        });
+
+    // Fetch complaints details for the selected container
+    fetch(`/get-complaints-details/${containerID}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Complaints data received:', data);  // Debugging: check if complaints data is fetched
+
+            // Populate the complaints table
+            const complaintsTableBody = document.getElementById('complaints-details');
+            complaintsTableBody.innerHTML = ''; // Clear previous content
+
+            if (data.complaints.length > 0) {
+                data.complaints.forEach(complaint => {
+                    complaintsTableBody.innerHTML += `
+                        <tr>
+                            <td>${complaint.complaint_id || 'N/A'}</td>
+                            <td>${complaint.description || 'N/A'}</td>
+                            <td>${complaint.date || 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('complaints-table').style.display = 'table'; // Show complaints table
+            } else {
+                complaintsTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3">No complaints available for this container</td>
+                    </tr>
+                `;
+                document.getElementById('complaints-table').style.display = 'table'; // Show complaints table even if empty
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching complaints details:', error);
+            alert('Error fetching complaints details. Check the console for more details.');
+        });
+}
+	</script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="{{ url_for('static', filename='js/PSA Active Container.js') }}"></script>
+</body>
+</html>

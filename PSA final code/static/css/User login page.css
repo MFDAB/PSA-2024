@@ -1,0 +1,250 @@
+* {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(-30deg, #2C0F2B,  #00001C, #00001C, #2C0F2B);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 420px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  border-radius: 10px;
+  padding: 30px 40px;
+  background: linear-gradient(
+    to top right,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.3)
+	);
+	border-radius: 14px;
+	padding: 10px;
+}
+
+.container h1 {
+  font-size: 36px;
+  text-align: center;
+}
+
+.container .input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0px;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgb(255, 255, 255, 0.2);
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder {
+  color: #fff;
+}
+
+.input-box i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.container .remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14.5px;
+  margin: -15px 0px 15px;
+}
+
+.remember-forgot label input {
+  color: #fff;
+  margin-right: 3px;
+}
+
+.remember-forgot a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+.container .btn {
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  box-decoration-break: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+form .button input:hover {
+  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+}
+
+.container .register-link {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0px 15px;
+}
+
+.register-link p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link p a:hover {
+  text-decoration: underline;
+}
+
+.sections{
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+.sections a{
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  padding: 5%;
+}
+
+.sections a:hover{
+  text-decoration: underline;
+}
+
+.sections:nth-child(3) a::after {
+  opacity: 1;
+  transform: scale(0);
+  transform-origin: center;
+}
+
+.sections:nth-child(3) a:hover::after,
+.sections:nth-child(3) a:focus::after{
+  transform: scale(1);
+}
+
+/* The container that holds the toggle */
+.toggle-container {
+  display: inline-block;
+  position: relative;
+  width: 200px; /* Increase width to make the toggle longer */
+  height: 34px;
+  margin-bottom: 50px;
+}
+
+/* Hide the default checkbox */
+.toggle-checkbox {
+  display: none;
+}
+
+/* The switch background */
+.toggle-label {
+  position: absolute;
+  cursor: pointer;
+  background-color: #71b7e6;
+  border-radius: 34px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px; /* Adjust padding for longer toggle */
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+}
+
+/* The circular slider (the toggle handle) */
+.toggle-label::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* Change background when checked */
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #9b59b6;
+}
+
+/* Move the circular slider when checked */
+.toggle-checkbox:checked + .toggle-label::before {
+  transform: translateX(160px); /* Adjust translation based on new width */
+}
+
+/* Text inside the toggle */
+.toggle-text {
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s;
+}
+
+/* Default colors for the left and right text */
+.toggle-text-left {
+  margin-left: 20px;
+  color: #71b7e6;  /* Default color for 'Container' */
+}
+
+.toggle-text-right {
+  margin-right: 30px;
+  color: #ccc;  /* Default color for 'Cargo' */
+}
+
+/* When not checked, change the right text color */
+.toggle-checkbox:not(:checked) + .toggle-label .toggle-text-right {
+  opacity: 1;
+  color: #9b59b6;  /* Semi-visible right text */
+}
+
+/* When checked, change the color of the left text */
+.toggle-checkbox:checked + .toggle-label .toggle-text-left {
+  color: #71b7e6;  /* Semi-visible left text */
+}
+
+/* When checked, change the color of the right text */
+.toggle-checkbox:checked + .toggle-label .toggle-text-right {
+  color: #9b59b6;  /* Highlighted color for 'Cargo' */
+}
+
+form .toggle-container span.toggle {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: white;
+}

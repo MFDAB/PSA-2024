@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/PSA Active Cargo.css') }}">
+
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="/PSA Dash Board"><i class='bx bxs-dashboard icon' ></i>Dashboard</a></li>
+				
+				<li class="divider" data-text="Container & Cargo details">Container & Cargo details</li>
+				<li>
+					<a href="#" ><i class='bx bxs-notepad icon' ></i> Active <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="/PSA_active_container" >Active Container</a></li>
+						<li><a href="/PSA_active_cargo">Active Cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> Unmatched <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="PSA_Unmatched_container">Unmatched container</a></li>
+						<li><a href="/PSA_Unmatched_cargo">Unmatched cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#" class="active"><i class='bx bxs-notepad icon' ></i> History <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="/PSA_History_container">History Container</a></li>
+						<li><a href="/PSA_Histroy_cargo" class="active">History Cargo</a></li>
+					</ul>
+				</li>
+				
+
+				<li>
+					<a href="#"><i class='bx bxs-inbox icon' ></i> Feedbacks <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">Service feed back</a></li>
+						<li><a href="#">Enquiries</a></li>
+						<li><a href="#">User List</a></li>
+						
+					</ul>
+				</li>
+
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://www.cmgassets.com/s3fs-public/styles/article_node_main_image/public/2024-03/untitled-design-97.png?h=611f27ca&itok=kPA8rwN8" alt="Profile Image">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+						<li><a href="{{ url_for('logout') }}"><i class='bx bxs-log-out-circle'></i> Logout</a></li> 
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->s
+
+			<!-- MAIN -->
+			 
+			<main>
+				<h1 class="title">History cargo</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">History cargo</a></li>
+				</ul>
+				
+				<div class="info-data">
+					<div class="card">
+						<div class="table">
+							<!-- Filter Bar -->
+							<div class="filter-bar">
+								<input type="text" id="cargo-id-filter" placeholder="Filter by Cargo ID">
+								<input type="text" id="status-filter" placeholder="Filter by Status">
+								<input type="text" id="tags-filter" placeholder="Filter by Tags">
+								<input type="text" id="origin-filter" placeholder="Filter by Origin">
+								<input type="text" id="destination-filter" placeholder="Filter by Destination">
+								<input type="text" id="assigned-container-filter" placeholder="Filter by Assigned Container">  <!-- New input for container filter -->
+							</div>
+						
+							<table id="cargo-table">
+								<thead>
+									<tr>
+										<th>Cargo ID</th>
+										<th>Date Created</th>
+										<th>Date Completed</th>
+										<th>Status</th>
+										<th>Name (Internal Ref)</th>
+										<th>Dimensions</th>
+										<th>Tags</th>
+										<th>Additional Description</th>
+										<th>Origin Location</th>
+										<th>Destination Location</th>
+										<th>Date of Departure</th>
+										<th>Date of Arrival</th>
+										<th>Completed</th>
+										<th>Flexidate Tolerance</th>
+										<th>Assigned Container</th>
+									</tr>
+								</thead>
+								<tbody id="cargo-details">
+									<!-- Cargo details will be injected here via JavaScript -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</main>
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		let number = document.getElementById("number")
+		let counter = 0;
+		setInterval(()=>{
+			if(counter == 65){
+				clearInteerval();
+			}
+			else{
+			counter +=1;
+			number.innerHTML = counter +"%"
+			}
+		},20);
+    window.onload = function() {
+        fetchCargoData();
+    };
+
+    	function fetchCargoData() {
+			fetch('/get-all-cargo-Delivered')  
+				.then(response => response.json())
+				.then(data => {
+					console.log('Cargo Data Received:', data);  // Add this to check the response in the browser's console
+					
+					const cargoTableBody = document.getElementById('cargo-details');
+					cargoTableBody.innerHTML = ''; // Clear previous content
+
+					if (data.cargo.length === 0) {
+						cargoTableBody.innerHTML = '<tr><td colspan="15">No cargo data available</td></tr>';
+						return;
+					}
+
+					data.cargo.forEach(cargo => {
+						const row = `
+							<tr>
+								<td>${cargo.cargoID || 'N/A'}</td>
+								<td>${cargo.date_created || 'N/A'}</td>
+								<td>${cargo.date_completed || 'N/A'}</td>
+								<td>${cargo.status || 'N/A'}</td>
+								<td>${cargo.name || 'N/A'}</td>
+								<td>${cargo.dimensions || 'N/A'}</td>
+								<td>${cargo.tags || 'N/A'}</td>
+								<td>${cargo.additional_description || 'N/A'}</td>
+								<td>${cargo.origin_location || 'N/A'}</td>
+								<td>${cargo.destination_location || 'N/A'}</td>
+								<td>${cargo.date_of_departure || 'N/A'}</td>
+								<td>${cargo.date_of_arrival || 'N/A'}</td>
+								<td>${cargo.completed || 'N/A'}</td>
+								<td>${cargo.flexidate_tolerance || 'N/A'} Days</td>
+								<td>${cargo.assigned_container || 'N/A'}</td>
+							</tr>
+						`;
+						cargoTableBody.innerHTML += row;
+					});
+				})
+				.catch(error => {
+					console.error('Error fetching cargo data:', error);
+				});
+		}
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="{{ url_for('static', filename='js/PSA Active Cargo.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="User List.css">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackSmart</a>
+			<ul class="side-menu">
+				<li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> PackSmart</a></li>
+				
+				<li class="divider" data-text="table and forms">Container & Cargo details</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> Active <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">Active Container</a></li>
+						<li><a href="#">Active Cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> History <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">History Container</a></li>
+						<li><a href="#">History Cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> Unmatched <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">Unmatched Container</a></li>
+						<li><a href="#">Unmatched Cargo</a></li>
+					</ul>
+				</li>
+				<li><a href="#" ><i class='bx bxs-dashboard icon' ></i> Maintainence</a></li>
+				<li>
+					<a href="#"><i class='bx bxs-inbox icon' ></i> Feedbacks <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">Cargo feed back</a></li>
+						<li><a href="#">Container Feed back</a></li>
+					</ul>
+				</li>
+
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon' ></i>
+					<span class="badge">5</span>
+				</a>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-message-square-dots icon' ></i>
+					<span class="badge">8</span>
+				</a>
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
+						<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
+						<li><a href="#"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">Dashboard</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Dashboard</a></li>
+				</ul>
+				
+					
+				</div>
+				<div class="banner">
+					<div class="slider" style="--quantity: 10">
+						<div class="item" style="--position: 1"><img src="" alt=""></div>
+						<div class="item" style="--position: 2"><img src="" alt=""></div>
+						<div class="item" style="--position: 3"><img src="" alt=""></div>
+						<div class="item" style="--position: 4"><img src="" alt=""></div>
+						<div class="item" style="--position: 5"><img src="" alt=""></div>
+						<div class="item" style="--position: 6"><img src="" alt=""></div>
+						<div class="item" style="--position: 7"><img src="" alt=""></div>
+						<div class="item" style="--position: 8"><img src="" alt=""></div>
+						<div class="item" style="--position: 9"><img src="" alt=""></div>
+						<div class="item" style="--position: 10"><img src="images/dragon_10.jpg" alt=""></div>
+					</div>
+					<div class="content">
+						<h1 data-content="">
+						</h1>
+						<div class="author">
+							<h2>Name</h2>
+							<p><b>User Type</b></p>
+							<p>
+								User Details
+							</p>
+						</div>
+						<div class="model"></div>
+					</div>
+				</div>
+			</main>
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		let number = document.getElementById("number")
+		let counter = 0;
+		setInterval(()=>{
+			if(counter == 65){
+				clearInteerval();
+			}
+			else{
+			counter +=1;
+			number.innerHTML = counter +"%"
+			}
+		},20);
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="User List.html"></script>
+</body>
+</html>

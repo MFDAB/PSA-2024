@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Cargo Booking.css') }}">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="/Cargo_DashBoard" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+				<li class="divider" data-text="Booking">Main</li>
+				
+				
+				<li><a href="/Cargo_Booking" class="active"><i class='bx bxs-chart icon' ></i> Booking</a></li>
+				<li><a href="/Cargo Info" ><i class='bx bxs-widget icon' ></i> Cargo Info</a></li>
+				<li><a href="/Cargo Disputes" ><i class='bx bxs-widget icon' ></i> Disputes</a></li>
+				
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+						<li><a href="{{ url_for('logout') }}"><i class='bx bxs-log-out-circle'></i> Logout</a></li> 
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">Booking</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Booking</a></li>
+				</ul>
+			
+				<div class="info-data">
+					<div class="card">
+						<div class="container">
+							<h2>Shipment Request Form</h2>
+							<form id="shipment-form">
+								<div class="form-group">
+									<label for="name">Name (This will be used to retrieve your request again)</label>
+									<input type="text" id="name" name="name" required>
+								</div>
+			
+								<div class="form-group">
+									<label for="business-name">Business Name (Optional)</label>
+									<input type="text" id="business-name" name="business-name">
+								</div>
+			
+								<div class="form-group">
+									<label for="chat-id">ChatID (from Telegram Bot)</label>
+									<input type="text" id="chat-id" name="chat-id" >
+								</div>
+			
+								<div class="form-group">
+									<label for="phone-number">Phone Number</label>
+									<input type="tel" id="phone-number" name="phone-number" required>
+								</div>
+			
+								<div class="form-group">
+									<label for="business-email">Business Email Address</label>
+									<input type="email" id="business-email" name="business-email" required>
+								</div>
+			
+								<!-- Separate Fields for Dimensions -->
+								<div class="form-group">
+									<label for="dimensions">Dimensions of the package (Length x Width x Height in meters)</label>
+									<div class="dimensions-container">
+										<input type="number" id="length" name="length" placeholder="Length (m)" required>
+										<input type="number" id="width" name="width" placeholder="Width (m)" required>
+										<input type="number" id="height" name="height" placeholder="Height (m)" required>
+									</div>
+								</div>
+			
+								<div class="form-group">
+									<label for="weight">Weight of the package (in kg)</label>
+									<input type="number" id="weight" name="weight" required>
+								</div>
+			
+								<!-- Dropdown for Origin -->
+								<div class="form-group">
+									<label for="origin">Origin Port/City/Country</label>
+									<select id="origin" name="origin" required>
+										<option value="" disabled selected>Select Origin</option>
+										<option value="Port of Singapore, Singapore">Port of Singapore, Singapore</option>
+										<option value="Port of Los Angeles, USA">Port of Los Angeles, USA</option>
+										<option value="Port of Hamburg, Germany">Port of Hamburg, Germany</option>
+										<!-- Add more options based on your data -->
+									</select>
+								</div>
+			
+								<!-- Dropdown for Destination -->
+								<div class="form-group">
+									<label for="destination">Destination Port/City/Country</label>
+									<select id="destination" name="destination" required>
+										<option value="" disabled selected>Select Destination</option>
+										<option value="Port of Rotterdam, Netherlands">Port of Rotterdam, Netherlands</option>
+										<option value="Port of Hong Kong, Hong Kong">Port of Hong Kong, Hong Kong</option>
+										<option value="Port of Shanghai, China">Port of Shanghai, China</option>
+										<!-- Add more options based on your data -->
+									</select>
+								</div>
+			
+								<div class="form-group-row">
+									<div class="form-group">
+										<label for="send-off-date">Send-off Date</label>
+										<input type="date" id="send-off-date" name="send-off-date" required>
+									</div>
+			
+									<div class="form-group">
+										<label for="arrival-date">Arrival Date (Ideal)</label>
+										<input type="date" id="arrival-date" name="arrival-date" required>
+									</div>
+								</div>
+			
+								<div class="form-group">
+									<label for="flexidate">Flexidate Tolerance (+- Days)</label>
+									<input type="number" id="flexidate" name="flexidate" placeholder="0 if no adjustment">
+								</div>
+			
+								<div class="form-group">
+									<label for="tags">Tags</label>
+									<select id="tags" name="tags[]" multiple>
+										<option value="Perishables">Perishables</option>
+										<option value="Food">Food</option>
+										<option value="Temperature Sensitive">Temperature Sensitive</option>
+										<option value="Medicine">Medicine</option>
+										<option value="Chemicals">Chemicals</option>
+										<option value="Fragile">Fragile</option>
+									</select>
+								</div>
+			
+								<div class="form-group">
+									<label for="comments">Additional Comments</label>
+									<textarea id="comments" name="comments" rows="4" placeholder="Elaborated comments..."></textarea>
+								</div>
+			
+								<button type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		let number = document.getElementById("number")
+		let counter = 0;
+		setInterval(()=>{
+			if(counter == 65){
+				clearInteerval();
+			}
+			else{
+			counter +=1;
+			number.innerHTML = counter +"%"
+			}
+		},20);
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="{{ url_for('static', filename='js/Cargo Booking.js') }}"></script>
+</body>
+</html>

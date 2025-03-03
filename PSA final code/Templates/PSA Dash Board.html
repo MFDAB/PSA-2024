@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/PSA Dash Board.css') }}">
+	<title>AdminSite</title>
+</head>
+<body>
+	<div class="container">
+		<!-- SIDEBAR -->
+		<section id="sidebar">
+			<a href="#" class="brand"><i class='bx bxs-smile icon'></i> PackTrack</a>
+			<ul class="side-menu">
+				<li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+				
+				<li class="divider" data-text="table and forms">Container & Cargo details</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> Active <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="/PSA_active_container">Active Container</a></li>
+						<li><a href="/PSA_active_cargo">Active Cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> Unmatched <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="PSA_Unmatched_container">Unmatched container</a></li>
+						<li><a href="/PSA_Unmatched_cargo">Unmatched cargo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#"><i class='bx bxs-notepad icon' ></i> History <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="/PSA_History_container">History Container</a></li>
+						<li><a href="/PSA_Histroy_cargo">History Cargo</a></li>
+					</ul>
+				</li>
+				
+
+				<li>
+					<a href="#"><i class='bx bxs-inbox icon' ></i> Feedbacks <i class='bx bx-chevron-right icon-right' ></i></a>
+					<ul class="side-dropdown">
+						<li><a href="#">Service feed back</a></li>
+						<li><a href="#">Enquiries</a></li>
+						<li><a href="#">User List</a></li>
+						
+					</ul>
+				</li>
+
+			</ul>
+		</section>
+		<!-- SIDEBAR -->
+
+		<!-- NAVBAR -->
+		<section id="content">
+			<!-- NAVBAR -->
+			<nav>
+				<i class='bx bx-menu toggle-sidebar' ></i>
+				<form action="#">
+					<div class="form-group">
+						<input type="text" placeholder="Search...">
+						
+					</div>
+				</form>
+				<a href="#" class="nav-link">
+					<i class='bx bxs-bell icon'></i>
+					<span class="badge">5</span>
+					<div class="popup">
+						<ul class="notification-list">
+							<li>You have a new message.</li>
+							<li>Your order was shipped.</li>
+							<li>John commented on your post.</li>
+							<li>Reminder: Meeting at 3 PM.</li>
+							<li>System update available.</li>
+						</ul>
+					</div>
+				</a>
+				
+				<span class="divider"></span>
+				<div class="profile">
+					<img src="https://www.cmgassets.com/s3fs-public/styles/article_node_main_image/public/2024-03/untitled-design-97.png?h=611f27ca&itok=kPA8rwN8" alt="">
+					<ul class="profile-link">
+						<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
+						<li><a href="#"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
+					</ul>
+				</div>
+			</nav>
+			<!-- NAVBAR -->
+
+
+			<!-- MAIN -->
+			<main>
+				<h1 class="title">Dashboard</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Dashboard</a></li>
+				</ul>
+				<div class="info-data">
+					<div class="card">
+						<h2>Total Reduced Carbon Emissions</h2>
+						<div class="skill-container">
+							<div class="outer">
+								<div class="inner">
+									<div id="number">0%</div>
+								</div>
+							</div>
+							<div>
+								<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+									<defs>
+										<linearGradient id="GradientColor">
+											<stop offset="0%" stop-color="#e91e63" />
+											<stop offset="100%" stop-color="#673ab7" />
+										</linearGradient>
+									</defs>
+									<circle cx="160" cy="160" r="140" stroke-linecap="round" />
+								</svg>
+							</div>
+						</div>
+						
+						<div class="h1-container">
+							<h1 id="emissions-saved">{{ emissions_saved }} MTCO2</h1>
+						</div>
+					</div>
+					<div class="info-data">
+						<div class="card">
+							<div class="head">
+								<div>
+									<h2 id="matchedCargos">0</h2>
+									<p>Total Matched Cargos for 2024</p>
+								</div>
+								<i class='bx bx-package icon'></i>
+							</div>
+							<div id="matchedCargosChart" class="chart"></div>
+						</div>
+					
+						<div class="card">
+							<div class="head">
+								<div>
+									<h2 id="matchedContainers">0</h2>
+									<p>Total Matched Containers for 2024</p>
+								</div>
+								<i class='bx bx-cube icon'></i>
+							</div>
+							<div id="matchedContainersChart" class="chart"></div>
+						</div>
+						<div class="info-data">
+							<div class="card">
+								<div class="head">
+									<div>
+										<h2 id="successfulTransits">0</h2>
+										<p>Total Successful Transits of 2024</p>
+									</div>
+									<i class='bx bx-check-circle icon'></i>
+								</div>
+								<div id="successfulTransitsChart" class="chart"></div>
+							</div>
+						
+							<div class="card">
+								<div class="head">
+									<div>
+										<h2 id="totalDisputes">0</h2>
+										<p>Total Disputes 2024</p>
+									</div>
+									<i class='bx bx-error icon'></i>
+								</div>
+								<div id="totalDisputesChart" class="chart"></div>
+							</div>
+						
+							<div class="card">
+								<div class="head">
+									<div>
+										<h2 id="activeContainers">0</h2>
+										<p>Current Active Containers</p>
+						
+										<h2 id="activeCargos">0</h2>
+										<p>Current Active Cargos</p>
+									</div>
+									<i class='bx bx-rocket icon'></i>
+								</div>
+								<div id="activeContainersChart" class="chart"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="info-data">
+					<div class="card">
+						<div class="data">
+							<div class="content-data">
+								<div class="head">
+									<h3>Carbon emmisions comparison</h3>
+									<div class="menu">
+										<i class='bx bx-dots-horizontal-rounded icon'></i>
+										<ul class="menu-link">
+											<li><a href="#">Edit</a></li>
+											<li><a href="#">Save</a></li>
+											<li><a href="#">Remove</a></li>
+										</ul>
+									</div>
+								</div>
+								<div id="chart">
+									<div id="chart" style="max-width: 800px; margin: 0 auto;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<!-- MAIN -->
+		</section>
+		<!-- NAVBAR -->
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			fetchSummaryStats();  // Fetch data when the page loads
+		});
+
+		function fetchSummaryStats() {
+			fetch('/get-summary-stats')
+				.then(response => response.json())
+				.then(data => {
+					if (data.error) {
+						console.error('Error:', data.error);
+						return;
+					}
+
+					// Update the card values
+					document.getElementById('matchedCargos').textContent = data.matched_cargos;
+					document.getElementById('matchedContainers').textContent = data.matched_containers;
+					document.getElementById('successfulTransits').textContent = data.successful_transits;
+					document.getElementById('totalDisputes').textContent = data.total_disputes;
+					document.getElementById('activeContainers').textContent = data.active_containers;
+					document.getElementById('activeCargos').textContent = data.active_cargos;
+
+					// Initialize ApexCharts for each metric
+					createDonutChart('matchedCargosChart', 'Matched Cargos', data.matched_cargos);
+					createDonutChart('matchedContainersChart', 'Matched Containers', data.matched_containers);
+					createDonutChart('successfulTransitsChart', 'Successful Transits', data.successful_transits);
+					createDonutChart('totalDisputesChart', 'Total Disputes', data.total_disputes);
+					createDonutChart('activeContainersChart', 'Active Containers', data.active_containers);
+				})
+				.catch(error => console.error('Error fetching summary stats:', error));
+		}
+
+		function createDonutChart(elementId, label, value) {
+			const options = {
+				series: [value],
+				chart: {
+					type: 'donut',
+					height: 200
+				},
+				labels: [label],
+				responsive: [{
+					breakpoint: 480,
+					options: {
+						chart: {
+							width: 300
+						},
+						legend: {
+							position: 'bottom'
+						}
+					}
+				}]
+			};
+
+			const chart = new ApexCharts(document.getElementById(elementId), options);
+			chart.render();
+		}
+		document.addEventListener('DOMContentLoaded', function () {
+			fetchSummaryStats();  // Fetch data when the page loads
+		});
+
+		function fetchSummaryStats() {
+			fetch('/get-summary-stats')
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! Status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.error) {
+						console.error('Error:', data.error);
+						return;
+					}
+
+					// Debugging: Log the response to verify data
+					console.log('Summary Stats:', data);
+
+					// Update the card values with fetched data
+					document.querySelector('#matchedCargos').textContent = data.matched_cargos;
+					document.querySelector('#matchedContainers').textContent = data.matched_containers;
+					document.querySelector('#successfulTransits').textContent = data.successful_transits;
+					document.querySelector('#totalDisputes').textContent = data.total_disputes;
+					document.querySelector('#activeCargos').textContent = data.active_cargos;
+					document.querySelector('#activeContainers').textContent = data.active_containers;
+				})
+				.catch(error => console.error('Error fetching summary stats:', error));
+		}
+		
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+	<script src="{{ url_for('static', filename='js/PSA Dash Board.js') }}"></script>
+</body>
+</html>
